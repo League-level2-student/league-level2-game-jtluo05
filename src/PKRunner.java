@@ -11,7 +11,7 @@ public class PKRunner {
 	int WIDTH=800;
 int HEIGHT=800;
 JFrame frame=new JFrame();
-JPanel panel=new JPanel();
+PKGamePanel panel=new PKGamePanel();
 
 
 public static void main(String[] args) {
@@ -24,12 +24,12 @@ public static void main(String[] args) {
 
 void setup() {
 	frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-	frame.show();
+	frame.setVisible(true);
 	frame.add(panel);
-	
+	frame.setSize(WIDTH, HEIGHT);
 
 	
-frame.pack();
+
 		
 }
 

@@ -1,6 +1,6 @@
 import java.awt.Graphics;
 
-public class Keeper extends GameObject {
+public class Keeper extends PKGameObject {
 
 	
 	Keeper(int x, int y, int width, int height) {
@@ -10,6 +10,6 @@ public class Keeper extends GameObject {
 
 
 void draw(Graphics g) {
-	g.drawImage(GamePanel.rocketImg, x, y, width, height, null);
+	
 }
 }
