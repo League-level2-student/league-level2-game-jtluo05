@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -16,7 +17,7 @@ public class PKGamePanel extends JPanel {
 	
 BufferedImage goal;
 PKGamePanel(){
-		
+	setPreferredSize(new Dimension(PKRunner.WIDTH, 765));
 		 try {
 
              goal = ImageIO.read(this.getClass().getResourceAsStream("goal.jpg"));
@@ -53,15 +54,12 @@ public void paintComponent(Graphics g) {
 	void drawGameState(Graphics g) {
 	g.drawImage(goal, 0, 0, 800,800,null);
 g.setColor(Color.BLACK);
-	g.fillRect(40, 675, 70, 200);
+	g.fillRect(75, 595, 70, 200);
 	g.setColor(Color.BLUE);
 	g.fillRect(350, 314, 125, 200);
 g.setColor(Color.GREEN);
-g.fillOval(350, 650, 60, 60);
-g.setColor(Color.WHITE);
-g.fillRect(650, 650, 70, 35);
-g.setColor(Color.WHITE);
-g.fillRect(650, 600, 70, 35);
+g.fillOval(275, 635, 60, 60);
+
 	}
 
 	void drawEndState(Graphics g) {
