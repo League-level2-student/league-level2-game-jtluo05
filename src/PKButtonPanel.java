@@ -6,30 +6,47 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class PKButtonPanel extends JPanel implements ActionListener {
-	JButton left=new JButton();
-	JButton right=new JButton();
-	JButton middle=new JButton();
+	JButton b1=new JButton();
+	JButton b2=new JButton();
+	JButton b3=new JButton();
 	
-	PKButtonPanel(){
+	PKGamePanel gamePanel;
+	
+	PKButtonPanel(PKGamePanel gamePanel){
 		setPreferredSize(new Dimension(PKRunner.WIDTH,35));
-		left.setText("left");
-		right.setText("right");
-		
-		middle.setText("middle");
+		b1.setText("left");
+		b2.setText("right");
+		b3.setText("middle");
 
-		add(left);
-		add(right);
-		add(middle);
+		b1.addMouseListener(gamePanel);
+		b2.addMouseListener(gamePanel);
+		b3.addMouseListener(gamePanel);
 		
+		add(b1);
+		add(b2);
+		add(b3);
+		
+		this.gamePanel=gamePanel;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-left.setText("high");
-right.setText("low");
-PKRunner.frame.pack();
+if (e.getSource().equals("left")) {
+	
+	b1.setText("high");
+	b2.setText("low");
+	remove(b3);
+	repaint();
+}
+		
 
+b1.setText("high");
+b2.setText("low");
+remove(b3);
 repaint();
+
+
+
 	}
 }

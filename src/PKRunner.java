@@ -2,27 +2,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import java.awt.Dimension;
 import java.net.URL;
 
@@ -40,7 +19,7 @@ static int HEIGHT=800;
 static JFrame frame=new JFrame();
 PKGamePanel gamePanel=new PKGamePanel();
 static JPanel panel=new JPanel();
-PKButtonPanel buttons=new PKButtonPanel();
+PKButtonPanel buttons=new PKButtonPanel(gamePanel);
 public static void main(String[] args) {
 	
 	PKRunner pkr=new PKRunner();
