@@ -24,6 +24,7 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 	 Timer timer=new Timer(1000/60, this);
 BufferedImage goal;
 Ball ball=new Ball();
+String direction="";
 PKGamePanel(){
 	setPreferredSize(new Dimension(PKRunner.WIDTH, 765));
 		 try {
@@ -41,6 +42,9 @@ PKGamePanel(){
      }
 		
 		 timer.start();
+		 if (ball.y<50) {
+				ball.stop=true;
+			}
 		
 	}
 @Override
@@ -78,6 +82,8 @@ ball.draw(g);
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
+
+		
 		if(isKicked) {
 			ball.update();
 		repaint();
@@ -89,8 +95,14 @@ ball.draw(g);
 		// TODO Auto-generated method stub
 	isKicked=true;		
 	JButton button=(JButton)e.getSource();
-	System.out.println(button.getText());
-	//set ball direction
+direction=	button.getText();
+	PKButtonPanel.b1.setText("high");
+	PKButtonPanel.b2.setText("low");
+	PKButtonPanel.b3.setVisible(false);
+	repaint();
+	 button=(JButton)e.getSource();
+	direction=direction+button.getText();
+	System.out.println(direction);
 
 	}
 	@Override
