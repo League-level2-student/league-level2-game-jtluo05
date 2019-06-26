@@ -78,6 +78,28 @@ ball.draw(g);
 		
 	}
 	
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+	isKicked=true;	
+	JButton button;
+
+	
+button=(JButton)e.getSource();
+
+
+direction+=button.getText();
+
+	PKButtonPanel.b1.setText("high");
+	PKButtonPanel.b2.setText("low");
+	PKButtonPanel.b3.setVisible(false);
+	repaint();
+	
+	System.out.println(direction);
+
+		
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -85,26 +107,12 @@ ball.draw(g);
 
 		
 		if(isKicked) {
-			ball.update();
+			ball.update(direction);
 		repaint();
 
 		}
 	}
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-	isKicked=true;		
-	JButton button=(JButton)e.getSource();
-direction=	button.getText();
-	PKButtonPanel.b1.setText("high");
-	PKButtonPanel.b2.setText("low");
-	PKButtonPanel.b3.setVisible(false);
-	repaint();
-	 button=(JButton)e.getSource();
-	direction=direction+button.getText();
-	System.out.println(direction);
-
-	}
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
