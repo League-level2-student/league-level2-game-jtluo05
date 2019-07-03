@@ -14,15 +14,24 @@ public class Ball {
 	void draw(Graphics g) {
 		g.setColor(Color.GREEN);
 		g.fillOval(x, y, 60, 60);
-		if (x < 280 && y < 300) {
-			stop = true;
-		}
+		
+		 
+		 
+	
+		
+		 
+		
+
+		
+		
 
 	}
 
 	void update(String direction) {
 		if (direction.equals("lefthigh")) {
-
+if (x < 280 && y < 300) {
+			stop = true;
+		}
 			x = x - 4;
 			y = y - 5;
 			if (stop) {
@@ -32,17 +41,21 @@ public class Ball {
 
 		}
 		if (direction.equals("leftlow")) {
-
-			x = x - 2;
+if (x < 64 && y < 630) {
+			stop = true;
+		}
+			x = x - 6;
 			y = y - 4;
 			if (stop) {
-				x = x + 2;
+				x = x + 6;
 				y = y + 4;
 			}
 
 		}
 		if (direction.equals("middlehigh")) {
-
+if ( y < 300) {
+			stop = true;
+		}
 			
 			y = y - 4;
 			if (stop) {
@@ -51,32 +64,37 @@ public class Ball {
 
 		}
 		if (direction.equals("middlelow")) {
-
-			x = x - 2;
+ if (y < 470) {
+			stop = true;
+		}
+			
 			y = y - 4;
 			if (stop) {
-				x = x + 2;
 				y = y + 4;
 			}
 
 		}
 		if (direction.equals("righthigh")) {
-
-			x = x + 2;
-			y = y + 4;
+ if (y < 295) {
+			stop = true;
+		}
+			x = x + 5;
+			y = y - 6;
 			if (stop) {
-				x = x - 2;
-				y = y - 4;
+				x = x - 5;
+				y = y + 6;
 			}
 
 		}
 		if (direction .equals("rightlow")) {
-
-			x = x + 2;
-			y = y + 4;
+if (y < 440) {
+			stop = true;
+}
+			x = x + 6;
+			y = y - 4;
 			if (stop) {
-				x = x - 2;
-				y = y - 4;
+				x = x - 6;
+				y = y + 4;
 			}
 
 		}
