@@ -15,123 +15,126 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class PKGamePanel extends JPanel implements ActionListener, MouseListener{
+public class PKGamePanel extends JPanel implements ActionListener, MouseListener {
 
-	
+	boolean isMoving = false;
 	final int GAME_STATE = 1;
-	int currentState =GAME_STATE;
-	static boolean isKicked=false;
-	 Timer timer=new Timer(1000/60, this);
-BufferedImage goal;
-Ball ball=new Ball();
-String direction="";
-PKGamePanel(){
-	setPreferredSize(new Dimension(PKRunner.WIDTH, 765));
-		 try {
+	int currentState = GAME_STATE;
+	static boolean isKicked = false;
+	Timer timer = new Timer(1000 / 60, this);
+	BufferedImage goal;
+	Ball ball = new Ball();
+	Keeper keeper=new Keeper(288, 307,(int)(1.79*125),(int)(1.15*200));
+	String direction = "";
 
-             goal = ImageIO.read(this.getClass().getResourceAsStream("goal.jpg"));
+	PKGamePanel() {
+		setPreferredSize(new Dimension(PKRunner.WIDTH, 765));
+		try {
 
-       
+			goal = ImageIO.read(this.getClass().getResourceAsStream("goal.jpg"));
 
-     } catch (IOException e) {
+		} catch (IOException e) {
 
-             // TODO Auto-generated catch block
+			// TODO Auto-generated catch block
 
-           JOptionPane.showMessageDialog(null, "Can't find goal.jpg");
+			JOptionPane.showMessageDialog(null, "Can't find goal.jpg");
 
-     }
-		
-		 timer.start();
-		 if (ball.y<50) {
-				ball.stop=true;
-			}
-		
-	}
-@Override
+		}
 
-public void paintComponent(Graphics g) {
-	g.fillRect(10, 10, 100, 100);
- if (currentState == GAME_STATE) {
-
-		drawGameState(g);
+		timer.start();
+		if (ball.y < 50) {
+			ball.stop = true;
+		}
 
 	}
 
-}
+	@Override
+
+	public void paintComponent(Graphics g) {
+		g.fillRect(10, 10, 100, 100);
+		if (currentState == GAME_STATE) {
+
+			drawGameState(g);
+
+		}
+
+	}
+
 	void drawMenuState(Graphics g) {
 		g.setColor(Color.BLUE);
 
-	
 	}
 
 	void drawGameState(Graphics g) {
-	g.drawImage(goal, 0, 0, 800,800,null);
-g.setColor(Color.BLACK);
-	g.fillRect(75, 595, 70, 200);
-	g.setColor(Color.BLUE);
-	g.fillRect(350, 314, 125, 200);
-ball.draw(g);
+		g.drawImage(goal, 0, 0, 800, 800, null);
+		g.setColor(Color.BLACK);
+		g.fillRect(75, 595, 70, 200);
+		g.setColor(Color.BLUE);
+		keeper.draw(g);
+		ball.draw(g);
 
 	}
 
 	void drawEndState(Graphics g) {
-		
+
 	}
-	
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-	isKicked=true;	
-	JButton button;
+		if (!ball.isMoving) {
 
-	
-button=(JButton)e.getSource();
+			isKicked = true;
 
+			JButton button;
 
-direction+=button.getText();
+			button = (JButton) e.getSource();
 
-	PKButtonPanel.b1.setText("high");
-	PKButtonPanel.b2.setText("low");
-	PKButtonPanel.b3.setVisible(false);
-	repaint();
-	
-	System.out.println(direction);
+			direction += button.getText();
 
-		
-	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+			PKButtonPanel.b1.setText("high");
+			PKButtonPanel.b2.setText("low");
+			PKButtonPanel.b3.setVisible(false);
+			repaint();
 
-		
-		if(isKicked) {
-			ball.update(direction);
-		repaint();
+			System.out.println(direction);
 
 		}
 	}
-	
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+
+		if (isKicked) {
+			ball.update(direction);
+			repaint();
+
+		}
+	}
+
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
