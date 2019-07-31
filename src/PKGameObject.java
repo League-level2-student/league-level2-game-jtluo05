@@ -5,7 +5,7 @@ public class PKGameObject {
 	int x;
 	int y;
 	int width;
-	int height;
+	 int height;
 
 	PKGameObject(int x, int y, int width, int height) {
 		this.x = x;
@@ -15,7 +15,9 @@ public class PKGameObject {
 
 	}
 	void drawCollisionBox(Graphics g) {
-		g.setColor(Color.CYAN);
-		g.drawRect(x, y, width, height);
+		
+		  g.setColor(Color.CYAN); g.drawRect(x, y, width, height);
+		 
 	}
+	
 }

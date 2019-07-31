@@ -3,6 +3,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 public class Ball {
 	public static BufferedImage image;
@@ -16,18 +17,18 @@ public class Ball {
 	boolean stop = false;
 	boolean isMoving = false;
 
-	Ball(){
+	Ball() {
 		if (needImage) {
-		    loadImage ("soccerball.png");
+			loadImage("soccerball.png");
 		}
 	}
-	
+
 	void draw(Graphics g) {
 		if (gotImage) {
 			g.drawImage(image, x, y, 60, 60, null);
 		} else {
-		g.setColor(Color.GREEN);
-		g.fillOval(x, y, 60, 60);
+			g.setColor(Color.GREEN);
+			g.fillOval(x, y, 60, 60);
 		}
 	}
 
@@ -42,11 +43,19 @@ public class Ball {
 		isMoving = false;
 	}
 
+	/*
+	 * void keeper() { JOptionPane.showMessageDialog(null,
+	 * "Now, the person playing the keeper will pick where " +
+	 * "he wants to dive. Please have the person playing the shooter close their eyes, "
+	 * + "so he can't see"); }
+	 */
+
 	void update(String direction) {
 		if (direction.equals("lefthigh")) {
 			move();
 			if (x < 280 && y < 300) {
 				stop();
+				//keeper();
 			}
 
 			x = x - 4;

@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
+//https://stackoverflow.com/questions/4787066/how-to-resize-and-rotate-an-image
 public class PKGamePanel extends JPanel implements ActionListener, MouseListener {
 
 	boolean isMoving = false;
@@ -23,8 +23,10 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 	static boolean isKicked = false;
 	Timer timer = new Timer(1000 / 60, this);
 	BufferedImage goal;
+	boolean play=false;
 	Ball ball = new Ball();
-	Keeper keeper=new Keeper(288, 307,(int)(1.79*125),(int)(1.15*200));
+	Leg leg=new Leg(0, 475, 140, 265);
+	Keeper keeper=new Keeper(288, 307,(int)(1.65*125),(int)(1.15*200));
 	String direction = "";
 
 	PKGamePanel() {
@@ -67,11 +69,10 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 
 	void drawGameState(Graphics g) {
 		g.drawImage(goal, 0, 0, 800, 800, null);
-		g.setColor(Color.BLACK);
-		g.fillRect(75, 595, 70, 200);
-		g.setColor(Color.BLUE);
+		
 		keeper.draw(g);
 		ball.draw(g);
+		leg.draw(g);
 
 	}
 
@@ -107,8 +108,10 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 		// TODO Auto-generated method stub
 
 		if (isKicked) {
+			if (play) {
 			ball.update(direction);
 			repaint();
+			}
 
 		}
 	}
