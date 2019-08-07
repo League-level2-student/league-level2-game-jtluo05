@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
 //https://stackoverflow.com/questions/4787066/how-to-resize-and-rotate-an-image
 public class PKGamePanel extends JPanel implements ActionListener, MouseListener {
 
@@ -21,13 +22,17 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 	final int GAME_STATE = 1;
 	int currentState = GAME_STATE;
 	static boolean isKicked = false;
-	Timer timer = new Timer(1000 / 60, this);
+	Timer gameTimer = new Timer(1000 / 60, this);
+	Timer playerTimer = new Timer(1000, this);
+	Font titleFont = new Font("Arial", Font.PLAIN, 48);
 	BufferedImage goal;
-	boolean play=false;
+	int timeLeft = 8;
+	boolean play = false;
 	Ball ball = new Ball();
-	Leg leg=new Leg(0, 475, 140, 265);
-	Keeper keeper=new Keeper(288, 307,(int)(1.65*125),(int)(1.15*200));
-	String direction = "";
+
+	Leg leg = new Leg(0, 475, 140, 265);
+	Keeper keeper = new Keeper(288, 307, (int) (1.65 * 125), (int) (1.15 * 200));
+	
 
 	PKGamePanel() {
 		setPreferredSize(new Dimension(PKRunner.WIDTH, 765));
@@ -43,7 +48,8 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 
 		}
 
-		timer.start();
+		gameTimer.start();
+		playerTimer.restart();
 		if (ball.y < 50) {
 			ball.stop = true;
 		}
@@ -57,7 +63,9 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 		if (currentState == GAME_STATE) {
 
 			drawGameState(g);
-
+			g.setFont(titleFont);
+			g.setColor(Color.YELLOW);
+			g.drawString("Time Left:" + timeLeft, 500, 75);
 		}
 
 	}
@@ -69,7 +77,7 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 
 	void drawGameState(Graphics g) {
 		g.drawImage(goal, 0, 0, 800, 800, null);
-		
+
 		keeper.draw(g);
 		ball.draw(g);
 		leg.draw(g);
@@ -91,14 +99,14 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 
 			button = (JButton) e.getSource();
 
-			direction += button.getText();
+			ball.direction += button.getText();
 
 			PKButtonPanel.b1.setText("high");
 			PKButtonPanel.b2.setText("low");
 			PKButtonPanel.b3.setVisible(false);
 			repaint();
 
-			System.out.println(direction);
+		//	System.out.println(ballDirection);
 
 		}
 	}
@@ -106,14 +114,29 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-
-		if (isKicked) {
-			if (play) {
-			ball.update(direction);
-			repaint();
+		if (e.getSource() == playerTimer) {
+			timeLeft--;
+			if (timeLeft == -1) {
+				timeLeft++;
+				JOptionPane.showMessageDialog(null, "Times Up! You have taken too much time and skip "
+						+ "your shooting turn ");
+				
+				timeLeft = 8;
+				playerTimer.stop();
 			}
+		} else if (isKicked) {
+			timeLeft = 8;
+			playerTimer.stop();
+			//JOptionPane.showMessageDialog(null, "Player 2(the keeper) will now choose "
+					//	+ "where they would like to dive");
+			
+				ball.update();
+				repaint();
+				
+			
 
 		}
+		repaint();
 	}
 
 	@Override

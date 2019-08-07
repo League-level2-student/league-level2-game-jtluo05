@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 public class PKRunner {
 	static int WIDTH = 800;
 	static int HEIGHT = 800;
+	
 	static JFrame frame = new JFrame();
 	PKGamePanel gamePanel = new PKGamePanel();
 	static JPanel panel = new JPanel();

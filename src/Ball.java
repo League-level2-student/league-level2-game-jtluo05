@@ -13,7 +13,7 @@ public class Ball {
 	int ychange = 0;
 	int x = 375;
 	int y = 635;
-
+String direction="";
 	boolean stop = false;
 	boolean isMoving = false;
 
@@ -50,13 +50,12 @@ public class Ball {
 	 * + "so he can't see"); }
 	 */
 
-	void update(String direction) {
+	void update() {
 		if (direction.equals("lefthigh")) {
 			move();
 			if (x < 280 && y < 300) {
 				stop();
-				//keeper();
-			}
+							}
 
 			x = x - 4;
 			y = y - 5;
