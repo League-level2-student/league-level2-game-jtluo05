@@ -24,10 +24,11 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 	static boolean isKicked = false;
 	Timer gameTimer = new Timer(1000 / 60, this);
 	Timer playerTimer = new Timer(1000, this);
-	Font titleFont = new Font("Arial", Font.PLAIN, 48);
+	Font titleFont = new Font("Arial", Font.PLAIN, 43);
 	BufferedImage goal;
+	
 	int timeLeft = 8;
-	boolean play = false;
+	static boolean play = false;
 	Ball ball = new Ball();
 
 	Leg leg = new Leg(0, 475, 140, 265);
@@ -53,7 +54,7 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 		if (ball.y < 50) {
 			ball.stop = true;
 		}
-
+		keeper.randomDirection();
 	}
 
 	@Override
@@ -66,7 +67,12 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 			g.setFont(titleFont);
 			g.setColor(Color.YELLOW);
 			g.drawString("Time Left:" + timeLeft, 500, 75);
+		if (keeper.timeup) {
+				g.setColor(Color.RED);
+			g.drawString("Times Up! You have taken too", 20,125);
+			g.drawString("much time and skip your shooting turn", 20, 175);
 		}
+				}
 
 	}
 
@@ -118,17 +124,17 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 			timeLeft--;
 			if (timeLeft == -1) {
 				timeLeft++;
-				JOptionPane.showMessageDialog(null, "Times Up! You have taken too much time and skip "
-						+ "your shooting turn ");
+				keeper.timeup=true;
 				
 				timeLeft = 8;
 				playerTimer.stop();
 			}
 		} else if (isKicked) {
+			play=true;
+		
 			timeLeft = 8;
 			playerTimer.stop();
-			//JOptionPane.showMessageDialog(null, "Player 2(the keeper) will now choose "
-					//	+ "where they would like to dive");
+	
 			
 				ball.update();
 				repaint();

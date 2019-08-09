@@ -8,25 +8,27 @@ import java.awt.image.ImageObserver;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-
+// play boolean isn't workiing
 public class Keeper extends PKGameObject implements ImageObserver {
 	public static BufferedImage image;
 	public static boolean needImage = true;
 	public static boolean gotImage = false;
-	static final int LEFTHIGH = 0;
-	static final int LEFTLOW = 1;
-	static final int MIDDLEHIGH = 2;
-	static final int MIDDLELOW = 3;
-	static final int RIGHTHIGH = 4;
-	static final int RIGHTLOW = 5;
+	static final int left = 0;
+	static final int middle = 1;
+	static final int right = 2;
+//	static final int MIDDLELOW = 3;
+//	static final int RIGHTHIGH = 4;
+//	static final int RIGHTLOW = 5;
 	int direction = 0;
-boolean stop=false;
+	boolean timeup = false;
+	boolean stop = false;
+
 	Keeper(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		if (needImage) {
 			loadImage("goalie.png");
 		}
-		randomDirection();
+
 	}
 
 	void draw(Graphics g) {
@@ -37,6 +39,10 @@ boolean stop=false;
 			g.setColor(Color.BLUE);
 			g.fillRect(x, y, width, height);
 		}
+	}
+
+	void update() {
+
 	}
 
 	void loadImage(String imageFile) {
@@ -51,79 +57,33 @@ boolean stop=false;
 			needImage = false;
 		}
 	}
+
 	void stop() {
 		stop = true;
-		
+
 	}
+
 	void randomDirection() {
-		direction = new Random().nextInt(6);
-		if (direction == LEFTHIGH) {
-			if (x < 280 && y < 300) {
-				stop();
-							}
+		direction = new Random().nextInt(3);
+		System.out.println(direction);
+	if (PKGamePanel.play) {
+	
+		
+		if (direction == left) {
 
-			x = x - 4;
-			y = y - 5;
-			if (stop) {
-				x = x + 4;
-				y = y + 5;
-			}
-		}
-		if (direction == LEFTLOW) {
-			if (x < 64 && y < 630) {
-				stop();
-			}
-			x = x - 7;
-			y = y - 4;
-			if (stop) {
-				x = x + 7;
-				y = y + 4;
-			}
-		}
-		if (direction == MIDDLEHIGH) {
-			if (y < 300) {
-				stop();
-			}
-
-			y = y - 7;
-			if (stop) {
-				y = y + 7;
-			}
+			x =50;
+System.out.println("left");
+		} 
+		else if (direction == middle) {
+			System.out.println("middle");
+		} 
+		else if (direction == right) {
+			System.out.println("right");
+			x =PKRunner.WIDTH-50-width;
 
 		}
-		if (direction == MIDDLELOW) {
-			if (y < 470) {
-				stop();
-			}
-
-			y = y - 4;
-			if (stop) {
-				y = y + 4;
-			}
-		}
-		if (direction == RIGHTHIGH) {
-			if (y < 295) {
-				stop();
-			}
-			x = x + 5;
-			y = y - 6;
-			if (stop) {
-				x = x - 5;
-				y = y + 6;
-			}
-
-		}
-		if (direction == RIGHTLOW) {
-			if (y < 440) {
-				stop();
-			}
-			x = x + 6;
-			y = y - 4;
-			if (stop) {
-				x = x - 6;
-				y = y + 4;
-			}
-		}
+		timeup = false;
+}
 	}
 
 	public BufferedImage rotateImageByDegrees(BufferedImage img, double angle) {

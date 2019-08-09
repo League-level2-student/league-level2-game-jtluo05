@@ -16,7 +16,7 @@ public class PKGameObject {
 	}
 	void drawCollisionBox(Graphics g) {
 		
-		  g.setColor(Color.CYAN); g.drawRect(x, y, width, height);
+		//  g.setColor(Color.CYAN); g.drawRect(x, y, width, height);
 		 
 	}
 	
