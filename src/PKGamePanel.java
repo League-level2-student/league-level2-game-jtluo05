@@ -26,21 +26,21 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 	Timer playerTimer = new Timer(1000, this);
 	Font titleFont = new Font("Arial", Font.PLAIN, 43);
 	BufferedImage goal;
-	
+	BufferedImage black;
+	int keeperDive = 0;
 	int timeLeft = 8;
 	static boolean play = false;
 	Ball ball = new Ball();
-
+	boolean randomcalled = false;
 	Leg leg = new Leg(0, 475, 140, 265);
 	Keeper keeper = new Keeper(288, 307, (int) (1.65 * 125), (int) (1.15 * 200));
-	
 
 	PKGamePanel() {
 		setPreferredSize(new Dimension(PKRunner.WIDTH, 765));
 		try {
 
 			goal = ImageIO.read(this.getClass().getResourceAsStream("goal.jpg"));
-
+			black = ImageIO.read(this.getClass().getResourceAsStream("black.jpg"));
 		} catch (IOException e) {
 
 			// TODO Auto-generated catch block
@@ -54,7 +54,12 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 		if (ball.y < 50) {
 			ball.stop = true;
 		}
-		keeper.randomDirection();
+
+	}
+
+	static void setPlay(boolean go) {
+		play = go;
+
 	}
 
 	@Override
@@ -67,12 +72,16 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 			g.setFont(titleFont);
 			g.setColor(Color.YELLOW);
 			g.drawString("Time Left:" + timeLeft, 500, 75);
-		if (keeper.timeup) {
+			if (keeper.timeup) {
+				
+				g.setColor(Color.black);
+				g.drawRect(0, 0, 900, 900);
+				g.drawImage(black, 0, 0, 800, 800, null);
 				g.setColor(Color.RED);
-			g.drawString("Times Up! You have taken too", 20,125);
-			g.drawString("much time and skip your shooting turn", 20, 175);
+				g.drawString("Times Up! You have taken too", 20, 125);
+				g.drawString("much time and skip your shooting turn", 20, 175);
+			}
 		}
-				}
 
 	}
 
@@ -83,7 +92,7 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 
 	void drawGameState(Graphics g) {
 		g.drawImage(goal, 0, 0, 800, 800, null);
-
+		
 		keeper.draw(g);
 		ball.draw(g);
 		leg.draw(g);
@@ -112,7 +121,7 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 			PKButtonPanel.b3.setVisible(false);
 			repaint();
 
-		//	System.out.println(ballDirection);
+			// System.out.println(ballDirection);
 
 		}
 	}
@@ -124,24 +133,29 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 			timeLeft--;
 			if (timeLeft == -1) {
 				timeLeft++;
-				keeper.timeup=true;
-				
+				keeper.timeup = true;
+
 				timeLeft = 8;
 				playerTimer.stop();
 			}
-		} else if (isKicked) {
-			play=true;
-		
+		}
+		if (ball.shotFired) {
 			timeLeft = 8;
 			playerTimer.stop();
-	
-			
-				ball.update();
-				repaint();
-				
-			
+			keeperDive = 1;
+			if (!randomcalled) {
+				keeper.randomDirection();
+				randomcalled = true;
+			}
 
 		}
+		if (isKicked) {
+			setPlay(true);
+
+			ball.update();
+
+		}
+
 		repaint();
 	}
 

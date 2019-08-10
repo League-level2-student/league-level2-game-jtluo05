@@ -8,6 +8,7 @@ import java.awt.image.ImageObserver;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+
 // play boolean isn't workiing
 public class Keeper extends PKGameObject implements ImageObserver {
 	public static BufferedImage image;
@@ -66,24 +67,21 @@ public class Keeper extends PKGameObject implements ImageObserver {
 	void randomDirection() {
 		direction = new Random().nextInt(3);
 		System.out.println(direction);
-	if (PKGamePanel.play) {
-	
-		
+
 		if (direction == left) {
 
-			x =50;
-System.out.println("left");
-		} 
-		else if (direction == middle) {
+			x = 50;
+			System.out.println("left");
+		} else if (direction == middle) {
 			System.out.println("middle");
-		} 
-		else if (direction == right) {
+		} else if (direction == right) {
 			System.out.println("right");
-			x =PKRunner.WIDTH-50-width;
+			x = PKRunner.WIDTH - 50 - width;
 
 		}
+
 		timeup = false;
-}
+
 	}
 
 	public BufferedImage rotateImageByDegrees(BufferedImage img, double angle) {

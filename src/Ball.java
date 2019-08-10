@@ -13,9 +13,10 @@ public class Ball {
 	int ychange = 0;
 	int x = 375;
 	int y = 635;
-String direction="";
+	String direction = "";
 	boolean stop = false;
 	boolean isMoving = false;
+	boolean shotFired = false;
 
 	Ball() {
 		if (needImage) {
@@ -41,6 +42,7 @@ String direction="";
 	void stop() {
 		stop = true;
 		isMoving = false;
+
 	}
 
 	/*
@@ -53,10 +55,10 @@ String direction="";
 	void update() {
 		if (direction.equals("lefthigh")) {
 			move();
-			if (x < 280 && y < 300) {
+			if (x < 280 && y < 315) {
 				stop();
-							}
-
+			}
+			shotFired = true;
 			x = x - 4;
 			y = y - 5;
 			if (stop) {
@@ -70,6 +72,7 @@ String direction="";
 			if (x < 64 && y < 630) {
 				stop();
 			}
+			shotFired = true;
 			x = x - 7;
 			y = y - 4;
 			if (stop) {
@@ -83,7 +86,7 @@ String direction="";
 			if (y < 300) {
 				stop();
 			}
-
+			shotFired = true;
 			y = y - 7;
 			if (stop) {
 				y = y + 7;
@@ -95,7 +98,7 @@ String direction="";
 			if (y < 470) {
 				stop();
 			}
-
+			shotFired = true;
 			y = y - 4;
 			if (stop) {
 				y = y + 4;
@@ -104,9 +107,10 @@ String direction="";
 		}
 		if (direction.equals("righthigh")) {
 			move();
-			if (y < 295) {
+			if (y < 290) {
 				stop();
 			}
+			shotFired = true;
 			x = x + 5;
 			y = y - 6;
 			if (stop) {
@@ -120,6 +124,7 @@ String direction="";
 			if (y < 440) {
 				stop();
 			}
+			shotFired = true;
 			x = x + 6;
 			y = y - 4;
 			if (stop) {
