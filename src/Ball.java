@@ -13,7 +13,7 @@ public class Ball {
 	int ychange = 0;
 	int x = 375;
 	int y = 635;
-	String direction = "";
+	static String direction = "";
 	boolean stop = false;
 	boolean isMoving = false;
 	boolean shotFired = false;
@@ -45,12 +45,7 @@ public class Ball {
 
 	}
 
-	/*
-	 * void keeper() { JOptionPane.showMessageDialog(null,
-	 * "Now, the person playing the keeper will pick where " +
-	 * "he wants to dive. Please have the person playing the shooter close their eyes, "
-	 * + "so he can't see"); }
-	 */
+	
 
 	void update() {
 		if (direction.equals("lefthigh")) {

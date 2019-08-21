@@ -73,7 +73,7 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 			g.setColor(Color.YELLOW);
 			g.drawString("Time Left:" + timeLeft, 500, 75);
 			if (keeper.timeup) {
-				
+
 				g.setColor(Color.black);
 				g.drawRect(0, 0, 900, 900);
 				g.drawImage(black, 0, 0, 800, 800, null);
@@ -92,7 +92,7 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 
 	void drawGameState(Graphics g) {
 		g.drawImage(goal, 0, 0, 800, 800, null);
-		
+
 		keeper.draw(g);
 		ball.draw(g);
 		leg.draw(g);
@@ -101,6 +101,26 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 
 	void drawEndState(Graphics g) {
 
+	}
+
+	void checkSave() {
+		if ((Ball.direction.equals("lefthigh") || Ball.direction.equals("leftlow")) 
+				&& keeper.direction == 0) {
+			JOptionPane.showMessageDialog(null,"Ball has been saved!!! MISS!!!");
+		}
+	
+		else	if ((Ball.direction.equals("middlehigh") || Ball.direction.equals("middlelow")) 
+				&& keeper.direction == 1) {
+			JOptionPane.showMessageDialog(null,"Ball has been saved!!! MISS!!!");
+		}
+		
+		else	if ((Ball.direction.equals("righthigh") || Ball.direction.equals("rightlow")) 
+				&& keeper.direction == 1) {
+			JOptionPane.showMessageDialog(null,"Ball has been saved!!! MISS!!!");
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "GOOOOOAAAAL!!! You scored!!!");
+		}
 	}
 
 	@Override
@@ -146,6 +166,8 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 			if (!randomcalled) {
 				keeper.randomDirection();
 				randomcalled = true;
+				
+				checkSave();
 			}
 
 		}

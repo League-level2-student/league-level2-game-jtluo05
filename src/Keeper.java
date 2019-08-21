@@ -20,7 +20,7 @@ public class Keeper extends PKGameObject implements ImageObserver {
 //	static final int MIDDLELOW = 3;
 //	static final int RIGHTHIGH = 4;
 //	static final int RIGHTLOW = 5;
-	int direction = 0;
+	static int direction = 0;
 	boolean timeup = false;
 	boolean stop = false;
 
