@@ -1,3 +1,4 @@
+import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -10,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -32,6 +34,7 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 	static boolean play = false;
 	Ball ball = new Ball();
 	boolean randomcalled = false;
+	boolean saveChecked=false;
 	Leg leg = new Leg(0, 475, 140, 265);
 	Keeper keeper = new Keeper(288, 307, (int) (1.65 * 125), (int) (1.15 * 200));
 
@@ -104,6 +107,7 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 	}
 
 	void checkSave() {
+		
 		if ((Ball.direction.equals("lefthigh") || Ball.direction.equals("leftlow")) 
 				&& keeper.direction == 0) {
 			JOptionPane.showMessageDialog(null,"Ball has been saved!!! MISS!!!");
@@ -119,7 +123,9 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 			JOptionPane.showMessageDialog(null,"Ball has been saved!!! MISS!!!");
 		}
 		else {
-			JOptionPane.showMessageDialog(null, "GOOOOOAAAAL!!! You scored!!!");
+		playSound("cheer.wav");	
+		JOptionPane.showMessageDialog(null, "GOOOOOAAAAL!!! You scored!!!");
+			
 		}
 	}
 
@@ -152,7 +158,7 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 		if (e.getSource() == playerTimer) {
 			timeLeft--;
 			if (timeLeft == -1) {
-				timeLeft++;
+				
 				keeper.timeup = true;
 
 				timeLeft = 8;
@@ -167,15 +173,23 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 				keeper.randomDirection();
 				randomcalled = true;
 				
-				checkSave();
+				
 			}
 
 		}
+		
 		if (isKicked) {
 			setPlay(true);
 
 			ball.update();
-
+			if (ball.stop) {
+				if (!saveChecked) {
+					checkSave();
+					saveChecked=true;
+				}
+				
+				
+			}
 		}
 
 		repaint();
@@ -204,5 +218,8 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 		// TODO Auto-generated method stub
 
 	}
-
+	private void playSound(String fileName) {
+		AudioClip sound = JApplet.newAudioClip(getClass().getResource(fileName));
+		sound.play();
+	}
 }

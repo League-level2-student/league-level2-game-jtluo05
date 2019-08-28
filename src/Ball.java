@@ -40,8 +40,12 @@ public class Ball {
 	}
 
 	void stop() {
-		stop = true;
-		isMoving = false;
+			isMoving = false;
+		if (!stop) {
+			System.out.println("stop");
+			
+		}	stop = true;
+
 
 	}
 
@@ -64,7 +68,7 @@ public class Ball {
 		}
 		if (direction.equals("leftlow")) {
 			move();
-			if (x < 64 && y < 630) {
+			if (x < 85 && y < 630) {
 				stop();
 			}
 			shotFired = true;
