@@ -16,6 +16,9 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+//add sound for miss
+//make shots not infinite
+//other
 
 //https://stackoverflow.com/questions/4787066/how-to-resize-and-rotate-an-image
 public class PKGamePanel extends JPanel implements ActionListener, MouseListener {
@@ -32,12 +35,14 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 	int keeperDive = 0;
 	int timeLeft = 8;
 	static boolean play = false;
-	Ball ball = new Ball();
+	Ball ball ;
 	boolean randomcalled = false;
 	boolean saveChecked=false;
 	Leg leg = new Leg(0, 475, 140, 265);
-	Keeper keeper = new Keeper(288, 307, (int) (1.65 * 125), (int) (1.15 * 200));
-
+	Keeper keeper ;
+int totalSaves=0;
+int totalGoals=0;
+AudioClip sound;
 	PKGamePanel() {
 		setPreferredSize(new Dimension(PKRunner.WIDTH, 765));
 		try {
@@ -52,11 +57,11 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 
 		}
 
+		
+		newPlay();
 		gameTimer.start();
-		playerTimer.restart();
-		if (ball.y < 50) {
-			ball.stop = true;
-		}
+
+		
 
 	}
 
@@ -75,6 +80,10 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 			g.setFont(titleFont);
 			g.setColor(Color.YELLOW);
 			g.drawString("Time Left:" + timeLeft, 500, 75);
+			
+			g.setColor(Color.red);
+			g.drawString("Total saves: "+ totalSaves, 20, 50);
+			g.drawString("Total goals: "+ totalGoals, 20, 100);
 			if (keeper.timeup) {
 
 				g.setColor(Color.black);
@@ -111,24 +120,52 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 		if ((Ball.direction.equals("lefthigh") || Ball.direction.equals("leftlow")) 
 				&& keeper.direction == 0) {
 			JOptionPane.showMessageDialog(null,"Ball has been saved!!! MISS!!!");
+			totalSaves++;
+			newPlay();
 		}
 	
 		else	if ((Ball.direction.equals("middlehigh") || Ball.direction.equals("middlelow")) 
 				&& keeper.direction == 1) {
 			JOptionPane.showMessageDialog(null,"Ball has been saved!!! MISS!!!");
+			totalSaves++;
+			newPlay();
 		}
 		
 		else	if ((Ball.direction.equals("righthigh") || Ball.direction.equals("rightlow")) 
 				&& keeper.direction == 1) {
 			JOptionPane.showMessageDialog(null,"Ball has been saved!!! MISS!!!");
+			totalSaves++;
+			newPlay();
 		}
 		else {
 		playSound("cheer.wav");	
 		JOptionPane.showMessageDialog(null, "GOOOOOAAAAL!!! You scored!!!");
-			
+		totalGoals++;
+		sound.stop();
+	newPlay();
 		}
+		
 	}
 
+	void newPlay() {
+		isKicked=false;
+		saveChecked=false;
+		isMoving=false;
+		keeper.direction=0;
+		
+		ball= new Ball();
+		keeper=new Keeper(288, 307, (int) (1.65 * 125), (int) (1.15 * 200));
+		playerTimer.restart();
+		PKButtonPanel.b1.setText("left");
+		PKButtonPanel.b2.setText("middle");
+		PKButtonPanel.b3.setVisible(true);
+		PKButtonPanel.b3.setText("right");
+		repaint();
+		ball.direction="";
+		
+	}
+	
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -163,6 +200,7 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 
 				timeLeft = 8;
 				playerTimer.stop();
+			
 			}
 		}
 		if (ball.shotFired) {
@@ -183,9 +221,12 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 
 			ball.update();
 			if (ball.stop) {
+				
 				if (!saveChecked) {
-					checkSave();
+					
+					
 					saveChecked=true;
+					checkSave();
 				}
 				
 				
@@ -219,7 +260,7 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 
 	}
 	private void playSound(String fileName) {
-		AudioClip sound = JApplet.newAudioClip(getClass().getResource(fileName));
+		 sound = JApplet.newAudioClip(getClass().getResource(fileName));
 		sound.play();
 	}
 }
