@@ -76,7 +76,7 @@ public class Keeper extends PKGameObject implements ImageObserver {
 			System.out.println("middle");
 		} else if (direction == right) {
 			System.out.println("right");
-			x = PKRunner.WIDTH - 50 - width;
+			x = PKRunner.WIDTH - 20 - width;
 
 		}
 

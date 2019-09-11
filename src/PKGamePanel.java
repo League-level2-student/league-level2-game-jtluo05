@@ -43,6 +43,7 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 int totalSaves=0;
 int totalGoals=0;
 AudioClip sound;
+
 	PKGamePanel() {
 		setPreferredSize(new Dimension(PKRunner.WIDTH, 765));
 		try {
@@ -92,6 +93,27 @@ AudioClip sound;
 				g.setColor(Color.RED);
 				g.drawString("Times Up! You have taken too", 20, 125);
 				g.drawString("much time and skip your shooting turn", 20, 175);
+				g.drawString("GAME OVER!", 20, 225);
+				g.drawString("You have lost the game for your team. :(", 20, 275);
+			}
+			else if (totalSaves==3) {
+				gameTimer.stop();
+				g.setColor(Color.black);
+				g.fillRect(0, 0, 900, 900);
+				g.setColor(Color.RED);
+				g.drawString("The goalie has won.", 20, 125);
+				g.drawString("GAME OVER!:(", 20, 175);
+				playerTimer.stop();
+			}
+			else if (totalGoals==10) {
+				gameTimer.stop();
+				g.setColor(Color.green);
+				g.fillRect(0, 0, 900, 900);
+				g.drawImage(black, 0, 0, 800, 800, null);
+				g.setColor(Color.black);
+				g.drawString("YOU WON!", 20, 125);
+				g.drawString("Good job. :)", 20, 175);
+				playerTimer.stop();
 			}
 		}
 
@@ -119,6 +141,7 @@ AudioClip sound;
 		
 		if ((Ball.direction.equals("lefthigh") || Ball.direction.equals("leftlow")) 
 				&& keeper.direction == 0) {
+			playSound("booing.mp3");playSound("booing.mp3");playSound("booing.mp3");
 			JOptionPane.showMessageDialog(null,"Ball has been saved!!! MISS!!!");
 			totalSaves++;
 			newPlay();
@@ -126,13 +149,15 @@ AudioClip sound;
 	
 		else	if ((Ball.direction.equals("middlehigh") || Ball.direction.equals("middlelow")) 
 				&& keeper.direction == 1) {
+			playSound("booing.mp3");
 			JOptionPane.showMessageDialog(null,"Ball has been saved!!! MISS!!!");
 			totalSaves++;
 			newPlay();
 		}
 		
 		else	if ((Ball.direction.equals("righthigh") || Ball.direction.equals("rightlow")) 
-				&& keeper.direction == 1) {
+				&& keeper.direction == 2) {
+			playSound("booing.mp3");
 			JOptionPane.showMessageDialog(null,"Ball has been saved!!! MISS!!!");
 			totalSaves++;
 			newPlay();
@@ -151,10 +176,13 @@ AudioClip sound;
 		isKicked=false;
 		saveChecked=false;
 		isMoving=false;
+		randomcalled=false;
 		keeper.direction=0;
+		saveChecked=false;
 		
 		ball= new Ball();
 		keeper=new Keeper(288, 307, (int) (1.65 * 125), (int) (1.15 * 200));
+		
 		playerTimer.restart();
 		PKButtonPanel.b1.setText("left");
 		PKButtonPanel.b2.setText("middle");
@@ -162,7 +190,7 @@ AudioClip sound;
 		PKButtonPanel.b3.setText("right");
 		repaint();
 		ball.direction="";
-		
+
 	}
 	
 	
