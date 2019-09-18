@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -21,7 +23,7 @@ import javax.swing.Timer;
 //other
 
 //https://stackoverflow.com/questions/4787066/how-to-resize-and-rotate-an-image
-public class PKGamePanel extends JPanel implements ActionListener, MouseListener {
+public class PKGamePanel extends JPanel implements ActionListener, MouseListener, KeyListener {
 
 	boolean isMoving = false;
 	final int GAME_STATE = 1;
@@ -33,7 +35,7 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 	BufferedImage goal;
 	BufferedImage black;
 	int keeperDive = 0;
-	int timeLeft = 8;
+	int timeLeft = 15;
 	static boolean play = false;
 	Ball ball ;
 	boolean randomcalled = false;
@@ -42,12 +44,15 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 	Keeper keeper ;
 int totalSaves=0;
 int totalGoals=0;
-AudioClip sound;
+AudioClip scoresound;
+AudioClip misssound;
 
 	PKGamePanel() {
 		setPreferredSize(new Dimension(PKRunner.WIDTH, 765));
 		try {
-
+			 scoresound = JApplet.newAudioClip(getClass().getResource("cheer.wav"));
+			 misssound = JApplet.newAudioClip(getClass().getResource("booing.wav"));
+		//	addKeyListener(this);
 			goal = ImageIO.read(this.getClass().getResourceAsStream("goal.jpg"));
 			black = ImageIO.read(this.getClass().getResourceAsStream("black.jpg"));
 		} catch (IOException e) {
@@ -81,7 +86,8 @@ AudioClip sound;
 			g.setFont(titleFont);
 			g.setColor(Color.YELLOW);
 			g.drawString("Time Left:" + timeLeft, 500, 75);
-			
+			g.setColor(Color.black);
+			g.drawString("Press i for instuctions", 300, 125);
 			g.setColor(Color.red);
 			g.drawString("Total saves: "+ totalSaves, 20, 50);
 			g.drawString("Total goals: "+ totalGoals, 20, 100);
@@ -141,32 +147,35 @@ AudioClip sound;
 		
 		if ((Ball.direction.equals("lefthigh") || Ball.direction.equals("leftlow")) 
 				&& keeper.direction == 0) {
-			playSound("booing.mp3");playSound("booing.mp3");playSound("booing.mp3");
+			misssound.play();
 			JOptionPane.showMessageDialog(null,"Ball has been saved!!! MISS!!!");
 			totalSaves++;
+			misssound.stop();
 			newPlay();
 		}
 	
 		else	if ((Ball.direction.equals("middlehigh") || Ball.direction.equals("middlelow")) 
 				&& keeper.direction == 1) {
-			playSound("booing.mp3");
+			misssound.play();
 			JOptionPane.showMessageDialog(null,"Ball has been saved!!! MISS!!!");
 			totalSaves++;
+			misssound.stop();
 			newPlay();
 		}
 		
 		else	if ((Ball.direction.equals("righthigh") || Ball.direction.equals("rightlow")) 
 				&& keeper.direction == 2) {
-			playSound("booing.mp3");
+			misssound.play();
 			JOptionPane.showMessageDialog(null,"Ball has been saved!!! MISS!!!");
 			totalSaves++;
+			misssound.stop();
 			newPlay();
 		}
 		else {
-		playSound("cheer.wav");	
+	scoresound.play();
 		JOptionPane.showMessageDialog(null, "GOOOOOAAAAL!!! You scored!!!");
 		totalGoals++;
-		sound.stop();
+		scoresound.stop();
 	newPlay();
 		}
 		
@@ -179,7 +188,7 @@ AudioClip sound;
 		randomcalled=false;
 		keeper.direction=0;
 		saveChecked=false;
-		
+		timeLeft--;
 		ball= new Ball();
 		keeper=new Keeper(288, 307, (int) (1.65 * 125), (int) (1.15 * 200));
 		
@@ -287,8 +296,30 @@ AudioClip sound;
 		// TODO Auto-generated method stub
 
 	}
-	private void playSound(String fileName) {
-		 sound = JApplet.newAudioClip(getClass().getResource(fileName));
-		sound.play();
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
 	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+		
+		if (e.getKeyCode()== KeyEvent.VK_I) {
+			playerTimer.stop();
+			JOptionPane.showMessageDialog(null, "The goalie is your opponent. To win score 10 goals,"
+					+ " before the goalie saves 3. Don't lose, good luck.");
+		}
+		playerTimer.start();
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

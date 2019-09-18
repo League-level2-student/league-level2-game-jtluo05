@@ -15,9 +15,9 @@ public class PKRunner {
 	static int WIDTH = 800;
 	static int HEIGHT = 800;
 	
-	static JFrame frame = new JFrame();
+	 JFrame frame = new JFrame();
 	PKGamePanel gamePanel = new PKGamePanel();
-	static JPanel panel = new JPanel();
+	 JPanel panel = new JPanel();
 	PKButtonPanel buttons = new PKButtonPanel(gamePanel);
 
 	public static void main(String[] args) {
@@ -29,8 +29,11 @@ public class PKRunner {
 	void setup() {
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		frame.setFocusable(true);
+		frame.addKeyListener(gamePanel);
 		panel.setLayout(new BoxLayout(panel, SwingConstants.VERTICAL));
 		panel.add(gamePanel);
+
 		panel.add(buttons);
 		frame.add(panel);
 		frame.setSize(WIDTH, HEIGHT);

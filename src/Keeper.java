@@ -9,7 +9,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-// play boolean isn't workiing
+
 public class Keeper extends PKGameObject implements ImageObserver {
 	public static BufferedImage image;
 	public static boolean needImage = true;
@@ -17,9 +17,7 @@ public class Keeper extends PKGameObject implements ImageObserver {
 	static final int left = 0;
 	static final int middle = 1;
 	static final int right = 2;
-//	static final int MIDDLELOW = 3;
-//	static final int RIGHTHIGH = 4;
-//	static final int RIGHTLOW = 5;
+
 	static int direction = 0;
 	boolean timeup = false;
 	boolean stop = false;
