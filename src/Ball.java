@@ -17,7 +17,7 @@ public class Ball {
 	boolean stop = false;
 	boolean isMoving = false;
 	boolean shotFired = false;
-
+//test
 	Ball() {
 		if (needImage) {
 			loadImage("soccerball.png");
