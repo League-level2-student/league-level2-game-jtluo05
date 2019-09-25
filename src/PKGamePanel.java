@@ -32,10 +32,11 @@ public class PKGamePanel extends JPanel implements ActionListener, MouseListener
 	Timer gameTimer = new Timer(1000 / 60, this);
 	Timer playerTimer = new Timer(1000, this);
 	Font titleFont = new Font("Arial", Font.PLAIN, 43);
+	Font font = new Font("Arial", Font.PLAIN, 82);
 	BufferedImage goal;
 	BufferedImage black;
 	int keeperDive = 0;
-	int timeLeft = 15;
+	int timeLeft = 30;
 	static boolean play = false;
 	Ball ball ;
 	boolean randomcalled = false;
@@ -87,7 +88,14 @@ AudioClip misssound;
 			g.setColor(Color.YELLOW);
 			g.drawString("Time Left:" + timeLeft, 500, 75);
 			g.setColor(Color.black);
-			g.drawString("Press i for instuctions", 300, 125);
+			if (totalGoals==0 && totalSaves==0) {
+				g.setFont(font);
+				g.drawString("Press i for instuctions", 17, 175);
+			}
+			else {
+			repaint();
+			}
+			g.setFont(titleFont);
 			g.setColor(Color.red);
 			g.drawString("Total saves: "+ totalSaves, 20, 50);
 			g.drawString("Total goals: "+ totalGoals, 20, 100);
@@ -311,7 +319,7 @@ AudioClip misssound;
 		if (e.getKeyCode()== KeyEvent.VK_I) {
 			playerTimer.stop();
 			JOptionPane.showMessageDialog(null, "The goalie is your opponent. To win score 10 goals,"
-					+ " before the goalie saves 3. Don't lose, good luck.");
+					+ " before the goalie saves 3. Use the buttons at the bottom to choose where you shoot. Don't lose, good luck.");
 		}
 		playerTimer.start();
 	}
